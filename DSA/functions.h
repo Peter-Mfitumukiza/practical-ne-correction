@@ -5,6 +5,7 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -45,6 +46,42 @@ void displayCurrentTime(){
     std::cout << std::setw(2) << timeinfo->tm_hour << ":" << std::setw(2) << timeinfo->tm_min << ":" << std::setw(2) << timeinfo->tm_sec << " ";
     std::cout << timezone.str() << " " << timeinfo->tm_year + 1900 << std::endl;
 
+}
+
+bool compareStringsCaseInsensitive(const string& str1, const string& str2) {
+    if (str1.length() != str2.length()) {
+        return false;
+    }
+
+    for (size_t i = 0; i < str1.length(); ++i) {
+        if (std::toupper(str1[i]) != std::toupper(str2[i])) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void printHelp(){
+    cout<<"=============================================="<<endl<<endl;
+    cout<<"*                  HELP MENU                 *"<<endl<<endl;
+    cout<<"* ****************************************** *"<<endl<<endl;
+    cout<<"add <Location>                        :Add a new location"<<endl;
+    cout<<"delete <Location>                     :Delete an existing location"<<endl;
+    cout<<"record <Location> <disease> <cases>   :Record a diseases and its cases"<<endl;
+    cout<<"list locations                        :List all existing locations"<<endl;
+    cout<<"list diseases                         :List existing diseases in locations"<<endl;
+    cout<<"where <disease>                       :Find where diseases exists"<<endl;
+    cout<<"cases <location> <disease>            :Find where diseases exists"<<endl;
+    cout<<"cases <disease>                       :Find total cases of a given disease"<<endl;
+    cout<<"help                                  :Print user manual"<<endl;
+    cout<<"exit                                  :Exit the program"<<endl<<endl;
+}
+
+void handleAddCommand(){
+    string location;
+    cin>>location;
+    cout<<location<<endl;
 }
 
 #endif
