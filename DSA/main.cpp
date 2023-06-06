@@ -28,6 +28,9 @@ int main()
         else if(compareStringsCaseInsensitive(command, "add")){
             handleAddCommand();
         }
+        else if(compareStringsCaseInsensitive(command, "list")){
+            handleListCommand();
+        }
         else {
             cout << "Invalid command" << endl;
         }

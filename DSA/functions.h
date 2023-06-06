@@ -6,8 +6,30 @@
 #include <ctime>
 #include <iomanip>
 #include <string>
+#include <fstream>
+#include <cctype>
 
 using namespace std;
+
+bool compareStringsCaseInsensitive(const string& str1, const string& str2) {
+    if (str1.length() != str2.length()) {
+        return false;
+    }
+    for (size_t i = 0; i < str1.length(); ++i) {
+        if (std::toupper(str1[i]) != std::toupper(str2[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+string toUpperCase(const string& word) {
+    string result = word;
+    for (char& c : result) {
+        c = std::toupper(c);
+    }
+    return result;
+}
 
 void welcomeToProgram(){
     cout<<"=============================================="<<endl<<endl;
@@ -48,19 +70,6 @@ void displayCurrentTime(){
 
 }
 
-bool compareStringsCaseInsensitive(const string& str1, const string& str2) {
-    if (str1.length() != str2.length()) {
-        return false;
-    }
-
-    for (size_t i = 0; i < str1.length(); ++i) {
-        if (std::toupper(str1[i]) != std::toupper(str2[i])) {
-            return false;
-        }
-    }
-
-    return true;
-}
 
 void printHelp(){
     cout<<"=============================================="<<endl<<endl;
@@ -81,7 +90,46 @@ void printHelp(){
 void handleAddCommand(){
     string location;
     cin>>location;
-    cout<<location<<endl;
+    if(location == ""){
+        cout<<"No city entered"<<endl;
+    }
+
+    string fileName = "locations.txt";
+    ofstream outputFile(fileName, std::ios::app);
+    if(outputFile.is_open()){
+        outputFile << toUpperCase(location) << "\n";
+        outputFile.close();
+        cout<<"Location "<<location<<" is successfully added!"<<endl;
+    }else {
+        cout<<"Something went wrong while adding the location.";
+    }
+}
+
+void handleListCommand(){
+    string nextKeyWord;
+    cin>>nextKeyWord;
+    if(nextKeyWord == ""){
+        cout<<"Command is incomplete!";
+    }
+    if(compareStringsCaseInsensitive(nextKeyWord, "locations")){
+        string fileName = "locations.txt";
+        ifstream inputFile(fileName);
+        if(inputFile.is_open()){
+            string line;
+            while(getline(inputFile, line)){
+                cout<<line<<endl;
+            }
+            inputFile.close();
+        }else{
+            cout<<"Something wrong while reading locations"<<endl;
+        }
+    }
+    else if(compareStringsCaseInsensitive(nextKeyWord, "diseases")){
+        cout<<"List of all dieseases"<<endl;
+    }
+    else{
+        cout<<"Invalid commmand!"<<endl;
+    }
 }
 
 #endif
