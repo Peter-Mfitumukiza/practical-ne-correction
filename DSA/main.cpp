@@ -31,6 +31,9 @@ int main()
         else if(compareStringsCaseInsensitive(command, "list")){
             handleListCommand();
         }
+        else if(compareStringsCaseInsensitive(command, "record")){
+            handleRecordCommand();
+        }
         else {
             cout << "Invalid command" << endl;
         }

@@ -132,4 +132,19 @@ void handleListCommand(){
     }
 }
 
+void handleRecordCommand(){
+    string location, disease;
+    int cases;
+    cin>>location>>disease>>cases;
+    string fileName = "cases.txt";
+    ofstream outputFile(fileName, std::ios_base::app);
+    if(outputFile.is_open()){
+        outputFile<<toUpperCase(location + "  " + disease + " " + to_string(cases))<<"\n";
+        outputFile.close();
+    }else{
+        cout<<"Something went wrong while recording disease case"<<endl;
+    }
+
+}
+
 #endif
