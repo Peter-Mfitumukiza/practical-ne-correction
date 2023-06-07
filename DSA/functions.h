@@ -234,6 +234,39 @@ void handleDeleteCommand()
     }
 }
 
+bool vectorContainsItem(const vector<string>& vec, string target) {
+    for (const auto& item : vec) {
+        if (item == target) {
+            return true;  // Item found in vector
+        }
+    }
+    return false;  // Item not found in vector
+}
+
+void listDiseases(){
+    vector<string> cases = readCases();
+    vector<string> diseases;
+    for(string reportedCase: cases){
+        istringstream iss(reportedCase);
+        vector<string> words;
+
+        string word;
+        while (iss >> word)
+        {
+            words.push_back(word);
+        }
+        if(!vectorContainsItem(diseases, words[1])){
+            diseases.push_back(words[1]);
+        }
+    }
+    // sort alphabetically
+    sort(diseases.begin(), diseases.end());
+    // print the diseases
+    for(string disease: diseases){
+        cout<<disease<<endl;
+    }
+}
+
 void handleListCommand()
 {
     string nextKeyWord;
@@ -254,7 +287,7 @@ void handleListCommand()
     }
     else if (compareStringsCaseInsensitive(nextKeyWord, "diseases"))
     {
-        cout << "List of all dieseases" << endl;
+        listDiseases();
     }
     else
     {
