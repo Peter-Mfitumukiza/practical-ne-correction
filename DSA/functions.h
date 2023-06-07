@@ -10,6 +10,7 @@
 #include <cctype>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -55,9 +56,30 @@ vector<string> readLocations()
     }
     else
     {
-        cout << "Something wrong while reading locations" << endl;
+        cout << "Something went wrong while reading locations" << endl;
     }
     return locations;
+}
+
+vector<string> readCases()
+{
+    vector<string> reportedCases;
+    string fileName = "cases.txt";
+    ifstream inputFile(fileName);
+    if (inputFile.is_open())
+    {
+        string line;
+        while (getline(inputFile, line))
+        {
+            reportedCases.push_back(line);
+        }
+        inputFile.close();
+    }
+    else
+    {
+        cout << "Something went wrong while reading reported cases" << endl;
+    }
+    return reportedCases;
 }
 
 void welcomeToProgram()
@@ -149,6 +171,42 @@ void handleAddCommand()
     }
 }
 
+void deleteCasesInLocation(string location)
+{
+    vector<string> cases = readCases();
+    vector<int> indexToDelete;
+    int index = 0;
+    for (string reportedCase : cases)
+    {
+        istringstream iss(reportedCase);
+        vector<string> words;
+
+        string word;
+        while (iss >> word)
+        {
+            words.push_back(word);
+        }
+        if(compareStringsCaseInsensitive(location, words[0])){
+            indexToDelete.push_back(index);
+        }
+        index++;
+    }
+    // delete the cases with the given location
+    for(int i: indexToDelete){
+        cases.erase(cases.begin()+ i);
+    }
+    // write updates to the file
+    string fileName = "cases.txt";
+    ofstream outputFile(fileName);
+    if(outputFile.is_open()){
+        for(string reportedCase: cases){
+            outputFile<<reportedCase << "\n";
+        }
+    }else{
+        cout<<"Something went wrong when writing updates"<<endl;
+    }
+}
+
 void handleDeleteCommand()
 {
     string location;
@@ -160,14 +218,19 @@ void handleDeleteCommand()
 
     string fileName = "locations.txt";
     ofstream outputFile(fileName);
-    if(outputFile.is_open()){
-        for(const auto& location: locations){
-            outputFile<<location<<"\n";
+    if (outputFile.is_open())
+    {
+        for (const auto &location : locations)
+        {
+            outputFile << location << "\n";
         }
         outputFile.close();
-        cout<<"location "<<upperCaseLocation<<" deleted successfully"<<endl;
-    }else{
-        cout<<"Something went wrong while recording updated locations"<<endl;
+        cout << "location " << upperCaseLocation << " deleted successfully" << endl;
+        deleteCasesInLocation(upperCaseLocation);
+    }
+    else
+    {
+        cout << "Something went wrong while recording updated locations" << endl;
     }
 }
 
@@ -186,7 +249,7 @@ void handleListCommand()
         // Print the sorted locations
         for (const string location : locations)
         {
-            cout <<location<<endl;
+            cout << location << endl;
         }
     }
     else if (compareStringsCaseInsensitive(nextKeyWord, "diseases"))
