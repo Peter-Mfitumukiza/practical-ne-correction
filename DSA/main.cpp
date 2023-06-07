@@ -2,6 +2,8 @@
 #include <string>
 #include "functions.h"
 
+using namespace std;
+
 int main()
 {
 
@@ -24,17 +26,25 @@ int main()
         else if (compareStringsCaseInsensitive(command, "help"))
         {
             printHelp();
-        } 
-        else if(compareStringsCaseInsensitive(command, "add")){
+        }
+        else if (compareStringsCaseInsensitive(command, "add"))
+        {
             handleAddCommand();
         }
-        else if(compareStringsCaseInsensitive(command, "list")){
+        else if (compareStringsCaseInsensitive(command, "delete"))
+        {
+            handleDeleteCommand();
+        }
+        else if (compareStringsCaseInsensitive(command, "list"))
+        {
             handleListCommand();
         }
-        else if(compareStringsCaseInsensitive(command, "record")){
+        else if (compareStringsCaseInsensitive(command, "record"))
+        {
             handleRecordCommand();
         }
-        else {
+        else
+        {
             cout << "Invalid command" << endl;
         }
     }
