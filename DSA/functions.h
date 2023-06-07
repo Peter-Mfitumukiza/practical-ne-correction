@@ -186,24 +186,30 @@ void deleteCasesInLocation(string location)
         {
             words.push_back(word);
         }
-        if(compareStringsCaseInsensitive(location, words[0])){
+        if (compareStringsCaseInsensitive(location, words[0]))
+        {
             indexToDelete.push_back(index);
         }
         index++;
     }
     // delete the cases with the given location
-    for(int i: indexToDelete){
-        cases.erase(cases.begin()+ i);
+    for (int i : indexToDelete)
+    {
+        cases.erase(cases.begin() + i);
     }
     // write updates to the file
     string fileName = "cases.txt";
     ofstream outputFile(fileName);
-    if(outputFile.is_open()){
-        for(string reportedCase: cases){
-            outputFile<<reportedCase << "\n";
+    if (outputFile.is_open())
+    {
+        for (string reportedCase : cases)
+        {
+            outputFile << reportedCase << "\n";
         }
-    }else{
-        cout<<"Something went wrong when writing updates"<<endl;
+    }
+    else
+    {
+        cout << "Something went wrong when writing updates" << endl;
     }
 }
 
@@ -234,19 +240,24 @@ void handleDeleteCommand()
     }
 }
 
-bool vectorContainsItem(const vector<string>& vec, string target) {
-    for (const auto& item : vec) {
-        if (item == target) {
-            return true;  // Item found in vector
+bool vectorContainsItem(const vector<string> &vec, string target)
+{
+    for (const auto &item : vec)
+    {
+        if (item == target)
+        {
+            return true; // Item found in vector
         }
     }
-    return false;  // Item not found in vector
+    return false; // Item not found in vector
 }
 
-void listDiseases(){
+void listDiseases()
+{
     vector<string> cases = readCases();
     vector<string> diseases;
-    for(string reportedCase: cases){
+    for (string reportedCase : cases)
+    {
         istringstream iss(reportedCase);
         vector<string> words;
 
@@ -255,15 +266,17 @@ void listDiseases(){
         {
             words.push_back(word);
         }
-        if(!vectorContainsItem(diseases, words[1])){
+        if (!vectorContainsItem(diseases, words[1]))
+        {
             diseases.push_back(words[1]);
         }
     }
     // sort alphabetically
     sort(diseases.begin(), diseases.end());
     // print the diseases
-    for(string disease: diseases){
-        cout<<disease<<endl;
+    for (string disease : diseases)
+    {
+        cout << disease << endl;
     }
 }
 
@@ -310,6 +323,41 @@ void handleRecordCommand()
     else
     {
         cout << "Something went wrong while recording disease case" << endl;
+    }
+}
+
+void handleWhereCommand()
+{
+    vector<string> locations;
+    vector<string> cases = readCases();
+    string disease;
+    cin >> disease;
+    for (string reportedCase : cases)
+    {
+        // turn the reported case (sentence) into a stream
+        istringstream iss(reportedCase);
+        vector<string> words;
+
+        string word;
+        // read and store each word in th sentence
+        while (iss >> word)
+        {
+            words.push_back(word);
+        }
+        if (compareStringsCaseInsensitive(words[1], disease))
+        {
+            if (!vectorContainsItem(locations, words[0]))
+            {
+                locations.push_back(words[0]);
+            }
+        }
+    }
+
+   sort(locations.begin(), locations.end());
+    // Print the sorted locations
+    for (const string location : locations)
+    {
+        cout << location << endl;
     }
 }
 

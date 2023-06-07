@@ -43,6 +43,9 @@ int main()
         {
             handleRecordCommand();
         }
+        else if(compareStringsCaseInsensitive(command, "where")){
+            handleWhereCommand();
+        }
         else
         {
             cout << "Invalid command" << endl;
