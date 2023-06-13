@@ -46,6 +46,9 @@ int main()
         else if(compareStringsCaseInsensitive(command, "where")){
             handleWhereCommand();
         }
+        else if(compareStringsCaseInsensitive(command, "cases")){
+            handleCasesCommand();
+        }
         else
         {
             cout << "Invalid command" << endl;

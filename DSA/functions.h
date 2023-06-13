@@ -361,4 +361,10 @@ void handleWhereCommand()
     }
 }
 
+void handleCasesCommand(){
+    string nextKeyword;
+    cin>>nextKeyword;
+    // if(compareStringsCaseInsensitive(nextKeyword, "diseas"))
+}
+
 #endif
