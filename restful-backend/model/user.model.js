@@ -14,10 +14,10 @@ const schema = new mongoose.Schema({
         required: true
     },
     nationalId:{
-        type: Number,
+        type: String,
         required: true
     },
-    Password:{
+    password:{
         type: String,
         required: true
     },

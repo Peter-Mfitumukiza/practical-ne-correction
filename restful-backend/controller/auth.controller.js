@@ -1,11 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.model');
+const User = require('../model/user.model');
+
+require('dotenv').config();
 
 const register = async(req,res) => {
     const userDetails = req.body;
     
-    const existingUser = await User.find({ email: userDetails.email});
+    const existingUser = await User.findOne({ email: userDetails.email});
     if(existingUser){
         return res.json({ status: 'error', message: 'You have already registered'});
     }
@@ -31,7 +33,7 @@ const login = async (req, res) => {
         return res.json({ status: 'error', message: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ userId: existingUser._id }, { expiresIn: '24h'});
+    const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET,  { expiresIn: '24h'});
 
     const userInfo = {
         fullnames: existingUser.fullnames,
