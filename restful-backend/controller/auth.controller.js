@@ -18,19 +18,19 @@ const register = async(req,res) => {
     const newUser = await User.create(userDetails);
     await newUser.save();
 
-    return res.json({ status: 'success', message:'User created successfully'});
+    return res.status(201).json({ status: 'success', message:'User created successfully'});
 }
 
 const login = async (req, res) => {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-        return res.json({ status: 'error', message: 'Invalid email or password' });
+        return res.status(400).json({ status: 'error', message: 'Invalid email or password' });
     }
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
     if(!isPasswordCorrect){
-        return res.json({ status: 'error', message: 'Invalid email or password' });
+        return res.status(400).json({ status: 'error', message: 'Invalid email or password' });
     }
 
     const token = jwt.sign({ userId: existingUser._id }, process.env.JWT_SECRET,  { expiresIn: '24h'});
@@ -42,7 +42,7 @@ const login = async (req, res) => {
         nationalId: existingUser.nationalId
     }
 
-    return res.json({ status:'success', message: 'Login successful', token, userInfo });
+    return res.status(200).json({ status:'success', message: 'Login successful', token, userInfo });
 }
 
 module.exports = {
