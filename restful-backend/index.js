@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/owner", ownerRoutes);
-app.use("/api/v1/vehicle", vehicleRoutes);
+app.use("/api/v1/owners", ownerRoutes);
+app.use("/api/v1/vehicles", vehicleRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to Vehicle Managment System!');

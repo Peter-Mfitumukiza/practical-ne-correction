@@ -13,7 +13,7 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Address: {
+    address: {
         type: String,
         required: true
     },
@@ -22,3 +22,5 @@ const schema = new mongoose.Schema({
         default: Date.now()
     }
 })
+
+module.exports = mongoose.model('VehicleOwner', schema);

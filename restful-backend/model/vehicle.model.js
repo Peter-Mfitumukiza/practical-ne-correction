@@ -17,14 +17,19 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  plateNumber: {
+    type: String,
+    required: true
+  },
   modelName: {
     type: String,
     required: true,
   },
-  OwnerId:{
-    type: Number,
+  ownerNationalId:{
+    type: mongoose.Schema.Types.String,
+    ref: 'VehicleOwner',
     required: true,
   }
 });
 
-module.exports = mongoose.model("Product", schema); 
+module.exports = mongoose.model("Vehicle", schema); 
