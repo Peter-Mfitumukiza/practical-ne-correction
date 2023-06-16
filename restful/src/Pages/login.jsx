@@ -1,5 +1,3 @@
-import './formStyles.css';
-
 const LoginPage = () => {
     return (
         <div className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh', backgroundColor: '#F3F5F9' }}>
