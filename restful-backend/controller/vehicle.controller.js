@@ -25,6 +25,53 @@ const getVehicles = async (req, res) => {
     }
 }
 
+const getPaginatedVehicles = async (req, res) => {
+    try {
+        const page = parseInt(req.params.page) || 1;
+        const perPage = parseInt(req.params.perPage) || 10;
+        const count = await Vehicle.countDocuments();
+        if (count === 0) {
+            res.status(404).json({
+                success: false,
+                status: 404,
+                message: "No vehicles found"
+            });
+            return;
+        }
+
+        const totalPages = Math.ceil(count / perPage);
+        if (page > totalPages) {
+            res.status(400).json({
+                success: false,
+                status: 400,
+                message: `Page ${page} does not exist`
+            });
+            return;
+        }
+
+        const vehicles = await Vehicle.find()
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+
+        return res.status(200).json({
+            success: true,
+            status: 200,
+            message: "Vehicles retrieved successfully",
+            data: {
+                vehicles,
+                currentPage: page,
+                totalPages
+            }
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+
+}
+
 const getVehiclesWithOwners = async (req, res) => {
     try {
         const vehicles = await Vehicle.aggregate([
@@ -58,5 +105,6 @@ const getVehiclesWithOwners = async (req, res) => {
 module.exports = {
     registerVehicle,
     getVehicles,
+    getPaginatedVehicles,
     getVehiclesWithOwners
 }

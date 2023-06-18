@@ -340,6 +340,65 @@
             }
           ]
         }
+      },
+      "/api/v1/vehicle/{page}/{perPage}": {
+        "get": {
+          "tags": [
+            "Vehicle"
+          ],
+          "summary": "",
+          "description": "",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "path",
+              "name": "perPage",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Vehicle"
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "error": {
+                    "type": "string",
+                    "example": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "Bearer": [
+                "global"
+              ]
+            }
+          ]
+        }
       }
     },
     "definitions": {
@@ -365,13 +424,6 @@
           "password": {
             "type": "string",
             "example": "string"
-          },
-          "dateOfCreation": {
-            "type": "string",
-            "example": "18/06/2023, 20:29:27"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       },
@@ -393,13 +445,6 @@
           "address": {
             "type": "string",
             "example": "string"
-          },
-          "dateOfCreation": {
-            "type": "string",
-            "example": "18/06/2023, 20:29:27"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       },
@@ -433,9 +478,6 @@
           "ownerNationalId": {
             "type": "string",
             "example": "string"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       }
