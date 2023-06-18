@@ -1,12 +1,19 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
 const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async(data) => {
+        try {
+            const response = await axios.post("http://localhost:3001/api/v1/auth/login", data);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
         // Handle form submission
-        console.log(data);
+        // console.log(data);
     };
 
     return (
@@ -22,7 +29,7 @@ const LoginPage = () => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
-                        <input type="password" className={`form-control ${errors.password ? 'is-invalid' : ''}`} id="password" placeholder="Enter your password" {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })} />
+                        <input type="password" className={`form-control ${errors.password ? 'is-invalid' : ''}`} id="password" placeholder="Enter your password" {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters long' } })} />
                         {errors.password && <div className="invalid-feedback text-danger">{errors.password.message}</div>}
                     </div>
                     <div className="mb-3">

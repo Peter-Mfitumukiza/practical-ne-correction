@@ -1,11 +1,12 @@
 const express = require('express');
 const cors  = require('cors');
-const authRoutes = require('./routes/auth.routes');
-const ownerRoutes = require('./routes/owner.routes');
-const vehicleRoutes = require('./routes/vehicle.routes');
-const swaggerUi = require('swagger-ui-express');
+const routes = require('./routes/index.routes');
+const { Swaggiffy } = require("swaggiffy");
+
+// const swaggerUi = require('swagger-ui-express');
 // const swaggerJsDOc = require('swagger-jsdoc');
-const documentation = require('./swagger.json');
+// const documentation = require('./swagger.json');
+// const documentation = require('./swagger_output.json');
 
 // connect to database
 require('./utils/dbConnection');
@@ -21,20 +22,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/owners", ownerRoutes);
-app.use("/api/v1/vehicles", vehicleRoutes);
+app.use("/api/v1", routes);
+// app.use("/api/v1/owners", ownerRoutes);
+// app.use("/api/v1/vehicles", vehicleRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to Vehicle Managment System!');
 });
 // set up documentation
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(documentation));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(documentation));
 
 // server
-const PORT = process.env.PORT || 3001;
+const port = process.env.PORT|| 5008;
 
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}...`);
+app.listen(port, () => {
+    console.log(`Server started on port ${port}...`);
 });
+
+new Swaggiffy().setupExpress(app).swaggiffy();

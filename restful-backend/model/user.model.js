@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { registerSchema } = require("swaggiffy");
 
 const schema = new mongoose.Schema({
     fullname: {
@@ -26,5 +27,7 @@ const schema = new mongoose.Schema({
         default: Date.now()
     }
 })
+
+registerSchema("User", schema, { orm: "mongoose" });
 
 module.exports = mongoose.model('User', schema);

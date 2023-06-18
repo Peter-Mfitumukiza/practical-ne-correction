@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { registerSchema } = require('swaggiffy');
 
 const schema = new mongoose.Schema({
   chasisNumber: {
@@ -13,7 +14,7 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  price:{
+  price: {
     type: Number,
     required: true,
   },
@@ -25,11 +26,13 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ownerNationalId:{
+  ownerNationalId: {
     type: mongoose.Schema.Types.String,
     ref: 'VehicleOwner',
     required: true,
   }
 });
 
-module.exports = mongoose.model("Vehicle", schema); 
+registerSchema("Vehicle", schema, { orm: "mongoose" });
+
+module.exports = mongoose.model("Vehicle", schema);
