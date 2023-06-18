@@ -3,11 +3,6 @@ const cors  = require('cors');
 const routes = require('./routes/index.routes');
 const { Swaggiffy } = require("swaggiffy");
 
-// const swaggerUi = require('swagger-ui-express');
-// const swaggerJsDOc = require('swagger-jsdoc');
-// const documentation = require('./swagger.json');
-// const documentation = require('./swagger_output.json');
-
 // connect to database
 require('./utils/dbConnection');
 

@@ -16,7 +16,7 @@
       },
       "version": "1.0.0"
     },
-    "host": "localhost:5008",
+    "host": "localhost:5001",
     "basePath": "/",
     "schemes": [
       "http"
@@ -424,13 +424,6 @@
           "password": {
             "type": "string",
             "example": "string"
-          },
-          "dateOfCreation": {
-            "type": "string",
-            "example": "18/06/2023, 23:08:27"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       },
@@ -452,13 +445,6 @@
           "address": {
             "type": "string",
             "example": "string"
-          },
-          "dateOfCreation": {
-            "type": "string",
-            "example": "18/06/2023, 23:08:27"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       },
@@ -492,9 +478,6 @@
           "ownerNationalId": {
             "type": "string",
             "example": "string"
-          },
-          "_id": {
-            "type": "object"
           }
         }
       }
