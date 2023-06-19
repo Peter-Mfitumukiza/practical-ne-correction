@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
 const AddVehicle = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const onSubmit = (data) => {
-        // Handle form submission
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post('http://localhost:5001/api/v1/vehicle/register', data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if(response.data.status == "error") {
+                setErrorMessage(response.data.message);
+            }
+            console.log(response.data);
+        } catch (error) {
+            // Handle error
+            console.log('Error occurred while adding vehicle:', error);
+            setErrorMessage('An error occurred. Please try again later.');
+        }
     };
 
     return (
         <div>
             <p className="fs-4 fw-bold mt-4">Register new Vehicle</p>
+            {errorMessage && (
+                <p className="alert alert-danger">{errorMessage}</p>
+            )}
 
             <form className="mt-4" style={{ maxWidth: '450px' }} onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
@@ -46,7 +66,7 @@ const AddVehicle = () => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="ownerId" className="form-label">Owner ID</label>
-                    <input type="number" className={`form-control ${errors.ownerId ? 'is-invalid' : ''}`} id="ownerId" {...register('ownerId', { required: 'Owner ID is required' })} />
+                    <input type="number" className={`form-control ${errors.ownerId ? 'is-invalid' : ''}`} id="ownerId" {...register('ownerNationalId', { required: 'Owner ID is required' })} />
                     {errors.ownerId && <div className="invalid-feedback">{errors.ownerId.message}</div>}
                 </div>
 
