@@ -1,7 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import authService from '../services/authService';
 
 const Sidebar = () => {
+    const navigate = useNavigate();
+    const handleLogout = (event) => {
+        event.preventDefault();
+        authService.logout();
+        navigate('/login');
+    }
     return (
         <div className="d-flex flex-column sidebar" style={{ backgroundColor: '#D3D0DF', width: '100%', height: '100vh', padding: '2rem' }}>
             <div className="user-profile mb-5">
@@ -24,7 +32,7 @@ const Sidebar = () => {
                 </NavLink>
             </nav>
             <div className="mt-auto">
-                <a href="/logout" className="nav-link">
+                <a href="/login"  onClick={handleLogout} className="nav-link">
                     Logout
                 </a>
             </div>

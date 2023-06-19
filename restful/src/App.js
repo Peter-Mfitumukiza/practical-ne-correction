@@ -8,6 +8,7 @@ import Dashboard from './Pages/dashboard';
 import NewVehiclePage from './Pages/newVehicle';
 import OwnersPage from './Pages/owners';
 import NewOwnerPage from './Pages/newOwner';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path='/' exact element={ <Dashboard/> } />
         <Route path="/signup" exact element={<SignupPage />} />
         <Route path="/login" exact element={<LoginPage />} />
-        <Route path='/dashboard' exact element={<Dashboard />} />
+        <Route path='/dashboard' exact element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute>  } />
         <Route path="/vehicles" exact element={<Vehicles />} />
         <Route path='/newVehicle' exact element={<NewVehiclePage />} />
         <Route path='/owners' exact element={<OwnersPage />} />
